@@ -861,5 +861,37 @@
         >
       </div>
     </div>
+
+    <!-- CONTENEDOR DE EXCURSIONES -->
+<div id="excursiones"></div>
+
+<!-- CÓDIGO QUE CARGA LAS EXCURSIONES -->
+<script>
+  fetch("/.netlify/functions/excursiones")
+    .then(res => res.json())
+    .then(data => {
+      const cont = document.getElementById("excursiones");
+      cont.innerHTML = "";
+
+      if (data.length === 0) {
+        cont.innerHTML = "<p>No hay excursiones disponibles.</p>";
+        return;
+      }
+
+      data.forEach(e => {
+        cont.innerHTML += `
+          <div class="card">
+            <h3>${e.titulo}</h3>
+            <p>${e.descripcion}</p>
+            <strong>$${e.precio}</strong>
+          </div>
+        `;
+      });
+    })
+    .catch(err => {
+      console.error(err);
+    });
+</script>
+
   </body>
 </html>
